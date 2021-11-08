@@ -11,7 +11,7 @@ import java.util.List;
 public interface LogBookService {
     List<LogBook> getAll();
     LogBook getById(Long logBookId);
-    LogBook create(LogBook request);
+    LogBook create(Long patientId, LogBook request);
     LogBook update(Long logbookId, LogBook request);
     ResponseEntity<?> delete(Long patientId);
 }

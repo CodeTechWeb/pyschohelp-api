@@ -45,13 +45,16 @@ public class LogBookServiceImpl implements LogBookService {
     }
 
     @Override
-    public LogBook create(LogBook request) {
+    public LogBook create(Long patientId, LogBook request) {
         Set<ConstraintViolation<LogBook>> violations = validator.validate(request);
 
         if(!violations.isEmpty())
             throw new ResourceValidationException(ENTITY, violations);
 
-        return logBookRepository.save(request);
+        return patientRepository.findById(patientId).map(patient -> {
+            request.setPatient(patient);
+            return logBookRepository.save(request);
+        }).orElseThrow(()-> new ResourceNotFoundException("POST", patientId));
     }
 
     @Override

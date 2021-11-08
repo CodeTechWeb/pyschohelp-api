@@ -13,13 +13,15 @@ public class CreateLogBookResource {
 
     @NotNull
     @Size(max = 200)
-    private String logbookName;
+    private String logbookName = " LogBook Name";
 
     @NotNull
     @Size(max = 200)
-    private String publicHistory;
+    private String publicHistory = " LogBook Name";
 
     @NotNull
     @Size(max = 200)
-    private String consultationReason;
+    private String consultationReason = " LogBook Name";
+
+    private Long patient_id;
 }

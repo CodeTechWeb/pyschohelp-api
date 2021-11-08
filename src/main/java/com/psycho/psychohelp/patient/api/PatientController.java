@@ -1,10 +1,11 @@
 package com.psycho.psychohelp.patient.api;
 
+import com.psycho.psychohelp.patient.domain.model.entity.Patient;
+import com.psycho.psychohelp.patient.domain.service.LogBookService;
 import com.psycho.psychohelp.patient.domain.service.PatientService;
+import com.psycho.psychohelp.patient.mapping.LogBookMapper;
 import com.psycho.psychohelp.patient.mapping.PatientMapper;
-import com.psycho.psychohelp.patient.resource.CreatePatientResource;
-import com.psycho.psychohelp.patient.resource.PatientResource;
-import com.psycho.psychohelp.patient.resource.UpdatePatientResource;
+import com.psycho.psychohelp.patient.resource.*;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -25,12 +26,18 @@ import java.util.List;
 public class PatientController {
 
     @Autowired
+    LogBookService logBookService;
+
+    @Autowired
     private PatientService patientService;
 
     @Autowired
     private PatientMapper mapper;
 
-    @Operation(summary = "Get Patients", description = "Get All Posts")
+    @Autowired
+    private LogBookMapper mapperLog;
+
+    @Operation(summary = "Get Patients", description = "Get All Patients")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200",description = "Patients found"),
             @ApiResponse(responseCode = "400",description = "Patient not found") })
@@ -41,18 +48,13 @@ public class PatientController {
 
     @Operation(summary = "Get Patients by Id", description = "Get Patient by Id")
     @GetMapping("{patientId}")
-    public PatientResource getPatientById(@PathVariable Long patientId) {
+    public PatientResource getById(@PathVariable Long patientId) {
         return mapper.toResource(patientService.getById(patientId));
     }
 
-    @Operation(summary = "Get Patients by Name", description = "Get Patient by First and Last Name")
-    @GetMapping("{patientFirstName&patientLastName}")
-    public PatientResource getPatientByFirstAndLastName(@PathVariable String patientFirstName, String patientLastName) {
-        return mapper.toResource(patientService.getByName(patientFirstName, patientLastName));
-    }
 
-    @Operation(summary = "Get Patients by Name", description = "Get Patient by First and Last Name")
-    @GetMapping("{patientEmail}")
+    @Operation(summary = "Get Patients by Email", description = "Get Patient information by email")
+    @GetMapping("/email/{patientEmail}")
     public PatientResource getPatientByEmail(@PathVariable String patientEmail) {
         return mapper.toResource(patientService.getByEmail(patientEmail));
     }
@@ -61,7 +63,10 @@ public class PatientController {
     @PostMapping
     public PatientResource createPatient(@RequestBody CreatePatientResource request)
     {
-        return mapper.toResource(patientService.create(mapper.toModel(request)));
+        Patient patient = patientService.create(mapper.toModel(request));
+        CreateLogBookResource resource = new CreateLogBookResource();
+        mapperLog.toResource(logBookService.create(patient.getId() ,mapperLog.toModel(resource)));
+        return mapper.toResource(mapper.toModel(request));
     }
 
     @Operation(summary = "Update patient", description = "Update Patient by Id ")
