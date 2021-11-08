@@ -5,7 +5,6 @@ import com.psycho.psychohelp.appointment.domain.persistance.AppointmentRepositor
 import com.psycho.psychohelp.appointment.domain.service.AppointmentService;
 import com.psycho.psychohelp.shared.exception.ResourceNotFoundException;
 import com.psycho.psychohelp.shared.exception.ResourceValidationException;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
@@ -21,11 +20,13 @@ public class AppointmentServiceImpl implements AppointmentService {
 
     private final static String ENTITY = "Appointment";
 
-    @Autowired
-    private AppointmentRepository appointmentRepository;
+    private final AppointmentRepository appointmentRepository;
+    private final Validator validator;
 
-    @Autowired
-    private Validator validator;
+    public AppointmentServiceImpl(AppointmentRepository appointmentRepository, Validator validator) {
+        this.appointmentRepository = appointmentRepository;
+        this.validator = validator;
+    }
 
     @Override
     public List<Appointment> getAll() {
@@ -63,19 +64,18 @@ public class AppointmentServiceImpl implements AppointmentService {
         return appointmentRepository.findById(appointmentId).map(appointment ->
                         appointmentRepository.save(
                                 appointment.withPsychoNotes(request.getPsychoNotes())
-                                        .withScheduleDate(request.getScheduleDate())
-                                        .withCreatedDate(request.getCreatedDate())))
+                                        .withScheduleDate(request.getScheduleDate())))
                 .orElseThrow(() -> new ResourceNotFoundException(ENTITY, appointmentId));
     }
 
-    @Override
-    public Appointment getByPsychologistName(String firstName, String lastName) {
-        return appointmentRepository.findByPsychologistName(firstName, lastName);
-    }
+    //@Override
+    //public Appointment getByPsychologistName(String psychoName) {
+    //    return appointmentRepository.findByPsychologistName(psychoName);
+    //}
 
     @Override
-    public Appointment getByTopic(String topic) {
-        return appointmentRepository.findByTopic(topic);
+    public Appointment getByPsychoNotes(String psychoNotes) {
+        return appointmentRepository.findByPsychoNotes(psychoNotes);
     }
 
     @Override

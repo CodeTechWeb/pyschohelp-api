@@ -32,8 +32,8 @@ public class AppointmentController {
 
     @Operation(summary = "Get all appointments", description = "Get All Posts")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200",description = "Appointments found"),
-            @ApiResponse(responseCode = "400",description = "Appointments not found") })
+            @ApiResponse(responseCode = "200", description = "Appointments found"),
+            @ApiResponse(responseCode = "400", description = "Appointments not found")})
     @GetMapping
     public Page<AppointmentResource> getAllAppointments(Pageable pageable) {
         return mapper.modelListToPage(appointmentService.getAll(), pageable);
@@ -45,20 +45,20 @@ public class AppointmentController {
         return mapper.toResource(appointmentService.getById(appointmentId));
     }
 
-    @Operation(summary = "Get Appointment by Psychologist Name", description = "Get Appointment by Psychologist Name")
-    @GetMapping("{psychoFirstName&psychoLastName}")
-    public AppointmentResource getAppointmentByPsychologistName(@PathVariable String psychoFirstName, String psychoLastName) {
-        return mapper.toResource(appointmentService.getByPsychologistName(psychoFirstName, psychoLastName));
-    }
+    //@Operation(summary = "Get Appointment by Psychologist Name", description = "Get Appointment by Psychologist Name")
+    //@GetMapping("{psychoName}")
+    //public AppointmentResource getAppointmentByPsychologistName(@PathVariable String psychoName) {
+    //    return mapper.toResource(appointmentService.getByPsychologistName(psychoName));
+    //}
 
     @Operation(summary = "Get Appointment by Topic", description = "Get Appointment by Topic")
-    @GetMapping("{appointmentTopic}")
-    public AppointmentResource getAppointmentByTopic(@PathVariable String appointmentTopic) {
-        return mapper.toResource(appointmentService.getByTopic(appointmentTopic));
+    @GetMapping("{appointmentNotes}")
+    public AppointmentResource getAppointmentByPsychoNotes(@PathVariable String appointmentNotes) {
+        return mapper.toResource(appointmentService.getByPsychoNotes(appointmentNotes));
     }
 
     @Operation(summary = "Create appointment", description = "Create appointment")
-    @PostMapping
+    @PostMapping("{appointmentId}")
     public AppointmentResource createAppointment(@Valid @RequestBody CreateAppointmentResource request) {
         return mapper.toResource(appointmentService.create(mapper.toModel(request)));
     }

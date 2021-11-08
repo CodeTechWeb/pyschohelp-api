@@ -25,11 +25,9 @@ public class Appointment extends AuditModel {
     @NotNull
     @NotBlank
     @Size(max = 100)
-    private String PsychoNotes;
+    private String psychoNotes;
 
     @NotNull
     private Date ScheduleDate;
 
-    @NotNull
-    private Date CreatedDate;
 }

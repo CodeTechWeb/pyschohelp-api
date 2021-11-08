@@ -19,11 +19,4 @@ public class UpdateAppointmentResource {
     @Size(max = 100)
     private String PsychoNotes;
 
-    @NotNull
-    @NotBlank
-    private Date ScheduleDate;
-
-    @NotNull
-    @NotBlank
-    private Date CreatedDate;
 }

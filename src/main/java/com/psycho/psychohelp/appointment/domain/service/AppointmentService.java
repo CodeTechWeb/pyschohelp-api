@@ -13,7 +13,7 @@ public interface AppointmentService {
     Appointment getById(Long appointmentId);
     Appointment create(Appointment request);
     Appointment update(Long appointmentId, Appointment request);
-    Appointment getByPsychologistName(String firstName, String lastName);
-    Appointment getByTopic(String topic);
+    //Appointment getByPsychologistName(String psychoName);
+    Appointment getByPsychoNotes(String psychoNotes);
     ResponseEntity<?> delete(Long appointmentId);
 }
