@@ -66,7 +66,9 @@ public class PatientController {
         Patient patient = patientService.create(mapper.toModel(request));
         CreateLogBookResource resource = new CreateLogBookResource();
         mapperLog.toResource(logBookService.create(patient.getId() ,mapperLog.toModel(resource)));
-        return mapper.toResource(mapper.toModel(request));
+        PatientResource patientResponse = mapper.toResource(mapper.toModel(request));
+        patientResponse.setId(patient.getId());
+        return patientResponse;
     }
 
     @Operation(summary = "Update patient", description = "Update Patient by Id ")
