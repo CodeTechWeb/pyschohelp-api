@@ -40,7 +40,7 @@ public class UpdatePatientResource {
     @NotNull
     @NotBlank
     @Size(min = 9, max = 9) //check
-    private Number phone;
+    private String phone;
 
     @NotNull
     @NotBlank

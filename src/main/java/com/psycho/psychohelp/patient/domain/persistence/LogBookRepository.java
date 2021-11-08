@@ -11,6 +11,5 @@ import java.util.List;
 @Repository
 public interface LogBookRepository extends JpaRepository<LogBook, Long> {
 
-    List<LogBook> findByPatientId(Long postId);
-    Page<LogBook> findByPatientId(Long postId, Pageable pageable);
+    LogBook findByPatientId(Long patientId);
 }

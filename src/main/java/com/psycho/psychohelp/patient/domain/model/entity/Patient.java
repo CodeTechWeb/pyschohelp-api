@@ -58,4 +58,5 @@ public class Patient extends AuditModel {
     @NotNull
     @NotBlank
     private String image;
+
 }

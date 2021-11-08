@@ -5,6 +5,7 @@ import com.psycho.psychohelp.patient.domain.model.entity.Patient;
 import com.psycho.psychohelp.patient.domain.persistence.LogBookRepository;
 import com.psycho.psychohelp.patient.domain.persistence.PatientRepository;
 import com.psycho.psychohelp.patient.domain.service.PatientService;
+import com.psycho.psychohelp.patient.resource.CreateLogBookResource;
 import com.psycho.psychohelp.shared.exception.ResourceNotFoundException;
 import com.psycho.psychohelp.shared.exception.ResourceValidationException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +26,9 @@ public class PatientServiceImpl implements PatientService {
 
     @Autowired
     private PatientRepository patientRepository;
+
+    @Autowired
+    private LogBookRepository logBookRepository;
 
     @Autowired
     private Validator validator;
@@ -51,7 +55,6 @@ public class PatientServiceImpl implements PatientService {
 
         if(!violations.isEmpty())
             throw new ResourceValidationException(ENTITY, violations);
-
         return patientRepository.save(request);
     }
 
