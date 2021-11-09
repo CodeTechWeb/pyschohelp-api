@@ -1,5 +1,6 @@
 package com.psycho.psychohelp.patient.domain.model.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.psycho.psychohelp.shared.domain.model.AuditModel;
 import lombok.*;
 import org.hibernate.validator.constraints.Range;
@@ -58,5 +59,10 @@ public class Patient extends AuditModel {
     @NotNull
     @NotBlank
     private String image;
+
+    @OneToOne(fetch = FetchType.LAZY, optional = false, cascade = CascadeType.ALL)
+    @JoinColumn(name = "logBook_id", nullable = false)
+    @JsonIgnore
+    private LogBook logBook;
 
 }

@@ -34,9 +34,4 @@ public class LogBook extends AuditModel {
     @Size(max = 200)
     private String consultationReason;
 
-    @OneToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "patient_id", nullable = false)
-    @JsonIgnore
-    private Patient patient;
-
 }

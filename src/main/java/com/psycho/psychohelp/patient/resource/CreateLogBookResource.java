@@ -17,7 +17,7 @@ public class CreateLogBookResource {
 
     @NotNull
     @Size(max = 200)
-    private String publicHistory = " LogBook Name";
+    private String publicHistory = " Public History ";
 
     @NotNull
     @Size(max = 200)
