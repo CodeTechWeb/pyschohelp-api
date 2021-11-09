@@ -32,5 +32,7 @@ public class PatientMapper {
 
     public Patient toModel(CreatePatientResource resource) { return mapper.map(resource, Patient.class); }
 
+    public Patient toModel(PatientResource resource) { return mapper.map(resource, Patient.class); }
+
     public Patient toModel(UpdatePatientResource resource) { return mapper.map(resource, Patient.class); }
 }

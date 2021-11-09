@@ -11,5 +11,4 @@ import java.util.List;
 @Repository
 public interface LogBookRepository extends JpaRepository<LogBook, Long> {
 
-    LogBook findByPatientId(Long patientId);
 }

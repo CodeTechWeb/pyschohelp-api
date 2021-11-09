@@ -5,6 +5,9 @@ import com.psycho.psychohelp.patient.domain.model.entity.Patient;
 import com.psycho.psychohelp.patient.domain.persistence.LogBookRepository;
 import com.psycho.psychohelp.patient.domain.persistence.PatientRepository;
 import com.psycho.psychohelp.patient.domain.service.LogBookService;
+import com.psycho.psychohelp.patient.mapping.LogBookMapper;
+import com.psycho.psychohelp.patient.resource.CreateLogBookResource;
+import com.psycho.psychohelp.patient.resource.CreatePatientResource;
 import com.psycho.psychohelp.shared.exception.ResourceNotFoundException;
 import com.psycho.psychohelp.shared.exception.ResourceValidationException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,6 +34,9 @@ public class LogBookServiceImpl implements LogBookService {
     private PatientRepository patientRepository;
 
     @Autowired
+    private LogBookMapper mapper;
+
+    @Autowired
     private Validator validator;
 
     @Override
@@ -45,16 +51,13 @@ public class LogBookServiceImpl implements LogBookService {
     }
 
     @Override
-    public LogBook create(Long patientId, LogBook request) {
-        Set<ConstraintViolation<LogBook>> violations = validator.validate(request);
+    public LogBook create(LogBook request, Patient patientRequest) {
+        //Validate the body request in the controller
+        Set<ConstraintViolation<Patient>> violations = validator.validate(patientRequest);
 
         if(!violations.isEmpty())
             throw new ResourceValidationException(ENTITY, violations);
-
-        return patientRepository.findById(patientId).map(patient -> {
-            request.setPatient(patient);
-            return logBookRepository.save(request);
-        }).orElseThrow(()-> new ResourceNotFoundException("POST", patientId));
+        return logBookRepository.save(request);
     }
 
     @Override

@@ -50,12 +50,15 @@ public class PatientServiceImpl implements PatientService {
     }
 
     @Override
-    public Patient create(Patient request) {
+    public Patient create(Patient request, Long logBookId) {
         Set<ConstraintViolation<Patient>> violations = validator.validate(request);
 
         if(!violations.isEmpty())
             throw new ResourceValidationException(ENTITY, violations);
-        return patientRepository.save(request);
+        return logBookRepository.findById(logBookId).map(logBook -> {
+            request.setLogBook(logBook);
+            return patientRepository.save(request);
+        }).orElseThrow(() -> new ResourceNotFoundException("LOGBOOK", logBookId));
     }
 
     @Override
