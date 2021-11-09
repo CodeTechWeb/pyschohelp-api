@@ -67,20 +67,6 @@ public class PatientController {
     @PostMapping
     public ResponseEntity<PatientResource> createPatient(@Validated @RequestBody CreatePatientResource request )
     {
-//        CreateLogBookResource resource = new CreateLogBookResource();
-//        PatientResource patientResponse ;
-//        try
-//        {
-//            Patient patient = patientService.create(mapper.toModel(request));
-//            mapperLog.toResource(logBookService.create(patient.getId() ,mapperLog.toModel(resource)));
-//            patientResponse = mapper.toResource(mapper.toModel(request));
-//            patientResponse.setId(patient.getId());
-//            return new ResponseEntity<PatientResource>(patientResponse, HttpStatus.CREATED);
-//
-//        } catch (Exception e) {
-//            return new ResponseEntity<>()
-//        }
-
         CreateLogBookResource resource = new CreateLogBookResource();
         try
         {
