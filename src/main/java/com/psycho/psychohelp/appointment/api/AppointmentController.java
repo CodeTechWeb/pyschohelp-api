@@ -58,6 +58,7 @@ public class AppointmentController {
     }
 
     @Operation(summary = "Create appointment", description = "Create appointment")
+    @PostMapping
     public AppointmentResource createAppointment(@Valid @RequestBody CreateAppointmentResource request) {
         return mapper.toResource(appointmentService.create(mapper.toModel(request)));
     }
