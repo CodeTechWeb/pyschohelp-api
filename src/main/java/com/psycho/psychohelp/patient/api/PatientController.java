@@ -24,6 +24,7 @@ import org.springframework.web.bind.annotation.*;
 import java.net.HttpRetryException;
 import java.util.List;
 
+
 @Tag(name = "Patient")
 @RestController
 @RequestMapping("/api/v1/patients")
