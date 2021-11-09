@@ -51,14 +51,13 @@ public class AppointmentController {
     //    return mapper.toResource(appointmentService.getByPsychologistName(psychoName));
     //}
 
-    @Operation(summary = "Get Appointment by Topic", description = "Get Appointment by Topic")
+    @Operation(summary = "Get Appointment by Notes", description = "Get Appointment by Notes")
     @GetMapping("{appointmentNotes}")
     public AppointmentResource getAppointmentByPsychoNotes(@PathVariable String appointmentNotes) {
         return mapper.toResource(appointmentService.getByPsychoNotes(appointmentNotes));
     }
 
     @Operation(summary = "Create appointment", description = "Create appointment")
-    @PostMapping("{appointmentId}")
     public AppointmentResource createAppointment(@Valid @RequestBody CreateAppointmentResource request) {
         return mapper.toResource(appointmentService.create(mapper.toModel(request)));
     }
