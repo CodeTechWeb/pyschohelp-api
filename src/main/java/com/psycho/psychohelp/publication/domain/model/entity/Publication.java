@@ -34,6 +34,9 @@ public class Publication extends AuditModel {
 
     @NotNull
     @NotBlank
+    private String photoUrl;
+    @NotNull
+    @NotBlank
     @Lob
     private String content;
 

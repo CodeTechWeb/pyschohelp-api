@@ -12,6 +12,10 @@ import javax.validation.constraints.Size;
 public class CreatePublicationResource {
     @NotNull
     @NotBlank
+    private String photoUrl;
+
+    @NotNull
+    @NotBlank
     @Size(max = 150)
     private String title;
 

@@ -1,6 +1,5 @@
 package com.psycho.psychohelp.psychologist.api;
 
-import com.psycho.psychohelp.psychologist.domain.model.entity.Psychologist;
 import com.psycho.psychohelp.psychologist.domain.service.PsychologistService;
 import com.psycho.psychohelp.psychologist.mapping.PsychologistMapper;
 import com.psycho.psychohelp.psychologist.resource.CreatePsychologistResource;
@@ -11,10 +10,11 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
 
 @Tag(name = "Psychologist")
 @RestController
@@ -32,9 +32,8 @@ public class PsychologistController {
             @ApiResponse(responseCode = "200",description = "Psychologists found"),
             @ApiResponse(responseCode = "400",description = "Psychologist not found")})
     @GetMapping
-    public List<PsychologistResource> getAllPsychologists()
-    {
-        return mapper.toResource(psychologistService.getAll());
+    public Page<PsychologistResource> getAllPsychologists(Pageable pageable) {
+        return mapper.modelListToPage(psychologistService.getAll(), pageable);
     }
 
     @Operation(summary = "Get Psychologists by Id", description = "Get Psychologist by Id")

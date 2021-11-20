@@ -9,5 +9,6 @@ public class PublicationResource {
     private Long id;
     private String title;
     private String description;
+    private String photoUrl;
     private String content;
 }
