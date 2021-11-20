@@ -45,10 +45,10 @@ public class PublicationServiceImpl implements PublicationService {
     @Override
     public Publication update(Long publicationId, Publication request) {
         return publicationRepository.findById(publicationId).map(publication ->
-             publicationRepository.save(publication
-                    .withTitle(request.getTitle())
-                    .withDescription(request.getDescription())
-                    .withContent(request.getContent())))
+                        publicationRepository.save(publication
+                                .withTitle(request.getTitle())
+                                .withDescription(request.getDescription())
+                                .withContent(request.getContent())))
                 .orElseThrow(()-> new ResourceNotFoundException(ENTITY, publicationId));
     }
 
