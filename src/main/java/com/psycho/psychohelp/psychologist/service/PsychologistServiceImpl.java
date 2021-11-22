@@ -29,21 +29,45 @@ public class PsychologistServiceImpl implements PsychologistService {
 
 
     @Override
-    public List<Psychologist> getAll()
-    {
+    public List<Psychologist> getAll() {
         return psychologistRepository.findAll();
     }
 
-    @Override
-    public Page<Psychologist> getAll(Pageable pageable)
-    {
-        return psychologistRepository.findAll(pageable);
-    }
+    //@Override
+    //public Page<Psychologist> getAll(Pageable pageable)
+    //{
+    //    return psychologistRepository.findAll(pageable);
+    //}
 
     @Override
     public Psychologist getById(Long psychologistId) {
         return psychologistRepository.findById(psychologistId)
                 .orElseThrow(() -> new ResourceNotFoundException(ENTITY, psychologistId));
+    }
+
+    @Override
+    public Psychologist getByEmail(String psychologistEmail) {
+        return psychologistRepository.findByEmail(psychologistEmail);
+    }
+
+    @Override
+    public List<Psychologist> getByGenre(String psychologistGenre) {
+        return psychologistRepository.findByGenre(psychologistGenre);
+    }
+
+    @Override
+    public List<Psychologist> getBySessionType(String sessionType) {
+        return psychologistRepository.findBySessionType(sessionType);
+    }
+
+    @Override
+    public List<Psychologist> getByGenreAndSessionType(String genre, String sessionType) {
+        return psychologistRepository.findByGenreAndSessionType(genre, sessionType);
+    }
+
+    @Override
+    public Psychologist getByName(String name) {
+        return psychologistRepository.findByName(name);
     }
 
     @Override
