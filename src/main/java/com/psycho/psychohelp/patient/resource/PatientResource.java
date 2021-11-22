@@ -14,7 +14,7 @@ public class PatientResource {
     private String email;
     private String password;
     private String phone;
-    private Date date;
+    private String date;
     private String gender;
-    private String image;
+    private String img;
 }

@@ -1,27 +1,16 @@
 package com.psycho.psychohelp.patient.api;
 
-import com.psycho.psychohelp.patient.domain.model.entity.LogBook;
-import com.psycho.psychohelp.patient.domain.model.entity.Patient;
-import com.psycho.psychohelp.patient.domain.service.LogBookService;
 import com.psycho.psychohelp.patient.domain.service.PatientService;
-import com.psycho.psychohelp.patient.mapping.LogBookMapper;
 import com.psycho.psychohelp.patient.mapping.PatientMapper;
 import com.psycho.psychohelp.patient.resource.*;
 import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.media.Content;
-import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
-import java.net.HttpRetryException;
 import java.util.List;
 
 
@@ -31,16 +20,11 @@ import java.util.List;
 public class PatientController {
 
     @Autowired
-    LogBookService logBookService;
-
-    @Autowired
     private PatientService patientService;
 
     @Autowired
     private PatientMapper mapper;
 
-    @Autowired
-    private LogBookMapper mapperLog;
 
     @Operation(summary = "Get Patients", description = "Get All Patients")
     @ApiResponses(value = {
@@ -64,35 +48,11 @@ public class PatientController {
         return mapper.toResource(patientService.getByEmail(patientEmail));
     }
 
-    @Operation(summary = "Create patient", description = "Create Patient")
+    //create patient
+    @Operation(summary = "Create Patient", description = "Create Patient")
     @PostMapping
-    public ResponseEntity<PatientResource> createPatient(@Validated @RequestBody CreatePatientResource request )
-    {
-//        CreateLogBookResource resource = new CreateLogBookResource();
-//        PatientResource patientResponse ;
-//        try
-//        {
-//            Patient patient = patientService.create(mapper.toModel(request));
-//            mapperLog.toResource(logBookService.create(patient.getId() ,mapperLog.toModel(resource)));
-//            patientResponse = mapper.toResource(mapper.toModel(request));
-//            patientResponse.setId(patient.getId());
-//            return new ResponseEntity<PatientResource>(patientResponse, HttpStatus.CREATED);
-//
-//        } catch (Exception e) {
-//            return new ResponseEntity<>()
-//        }
-
-        CreateLogBookResource resource = new CreateLogBookResource();
-        try
-        {
-            PatientResource patientResponse = mapper.toResource(mapper.toModel(request));
-            LogBook logBook = logBookService.create(mapperLog.toModel(resource), mapper.toModel(request));
-            Patient patient = patientService.create(mapper.toModel(patientResponse), logBook.getId());
-            patientResponse.setId(patient.getId());
-            return new ResponseEntity<PatientResource>(patientResponse, HttpStatus.CREATED);
-        } catch (Exception e) {
-            return new ResponseEntity<PatientResource>(HttpStatus.BAD_REQUEST);
-        }
+    public PatientResource createPatient( @RequestBody CreatePatientResource request) {
+        return mapper.toResource(patientService.create(mapper.toModel(request)));
     }
 
     @Operation(summary = "Update patient", description = "Update Patient by Id ")

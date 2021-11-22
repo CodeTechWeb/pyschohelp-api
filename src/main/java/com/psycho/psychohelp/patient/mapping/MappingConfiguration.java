@@ -8,6 +8,4 @@ public class MappingConfiguration {
     @Bean
     public PatientMapper patientMapper() { return new PatientMapper(); }
 
-    @Bean
-    public LogBookMapper logBookMapper() { return new LogBookMapper(); }
 }
