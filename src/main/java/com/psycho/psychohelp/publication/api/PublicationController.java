@@ -17,6 +17,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.List;
 
 @Tag(name = "Publication")
 @RestController
@@ -24,34 +25,31 @@ import javax.validation.Valid;
 public class PublicationController {
 
     @Autowired
-    private final PublicationService publicationService;
+    private PublicationService publicationService;
 
-    private final PublicationMapper mapper;
+    @Autowired
+    private PublicationMapper mapper;
 
-    public PublicationController(PublicationService publicationService, PublicationMapper publicationMapper) {
-        this.publicationService = publicationService;
-        this.mapper = publicationMapper;
-    }
 
     @Operation(summary = "Get Publications", description = "Get All Publications")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200",description = "Patients found"),
             @ApiResponse(responseCode = "400",description = "Patient not found") })
     @GetMapping
-    public Page<PublicationResource> getAllPublications(Pageable pageable){
-        return mapper.modelListToPage(publicationService.getAll(), pageable);
+    public List<PublicationResource> getAllPublications(){
+        return mapper.toResource(publicationService.getAll());
+    }
+
+    @Operation(summary = "Create Publication", description = "Create Publication")
+    @PostMapping("publication/{publicationId}")
+    public PublicationResource createPublication(@PathVariable Long publicationId,  @Valid @RequestBody CreatePublicationResource request){
+        return mapper.toResource(publicationService.create(mapper.toModel(request),publicationId));
     }
 
     @Operation(summary = "Get Publication by Id", description = "Get Publication by Id")
     @GetMapping("{publicationId}")
     public PublicationResource getPublicationById(@PathVariable Long publicationId){
         return mapper.toResource(publicationService.getById(publicationId));
-    }
-
-    @Operation(summary = "Create Publication", description = "Create Publication")
-    @PostMapping
-    public PublicationResource createPublication(@Valid @RequestBody CreatePublicationResource request){
-        return mapper.toResource(publicationService.create(mapper.toModel(request)));
     }
 
     @Operation(summary = "Update Publication", description = "Update Publication by Id ")
@@ -65,6 +63,14 @@ public class PublicationController {
     public ResponseEntity<?> deletePublication(@PathVariable Long publicationId){
         return publicationService.delete(publicationId);
     }
+
+    @Operation(summary = "Get Publication by psychologist Id", description = "Get Publication by psychologist Id")
+    @GetMapping("psychologist/{psychologistId}")
+    public List<PublicationResource> getPublicationByPsychologistId(@PathVariable Long psychologistId){
+        return mapper.toResource(publicationService.getByPsychologistId(psychologistId));
+    }
+
+
 
 
 
