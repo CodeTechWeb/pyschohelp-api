@@ -9,4 +9,9 @@ public class MappingConfiguration {
     public PsychologistMapper psychologistMapper() {
         return new PsychologistMapper();
     }
+
+    @Bean
+    public ScheduleMapper scheduleMapper() {
+        return new ScheduleMapper();
+    }
 }

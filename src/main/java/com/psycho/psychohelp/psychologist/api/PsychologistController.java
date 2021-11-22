@@ -1,9 +1,18 @@
 package com.psycho.psychohelp.psychologist.api;
 
+import com.psycho.psychohelp.patient.resource.PatientResource;
+import com.psycho.psychohelp.psychologist.domain.model.entity.Psychologist;
+import com.psycho.psychohelp.psychologist.domain.model.entity.PsychologistSchedule;
+import com.psycho.psychohelp.psychologist.domain.model.entity.PsychologistScheduleFK;
+import com.psycho.psychohelp.psychologist.domain.model.entity.Schedule;
+import com.psycho.psychohelp.psychologist.domain.persistence.PsychologistScheduleRepository;
 import com.psycho.psychohelp.psychologist.domain.service.PsychologistService;
+import com.psycho.psychohelp.psychologist.domain.service.ScheduleService;
 import com.psycho.psychohelp.psychologist.mapping.PsychologistMapper;
+import com.psycho.psychohelp.psychologist.mapping.ScheduleMapper;
 import com.psycho.psychohelp.psychologist.resource.CreatePsychologistResource;
 import com.psycho.psychohelp.psychologist.resource.PsychologistResource;
+import com.psycho.psychohelp.psychologist.resource.ScheduleResource;
 import com.psycho.psychohelp.psychologist.resource.UpdatePsychologistResource;
 import com.psycho.psychohelp.shared.exception.ResourceNotFoundException;
 import io.swagger.v3.oas.annotations.Operation;
@@ -13,8 +22,10 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.client.HttpClientErrorException;
 
 import java.util.List;
 
@@ -28,7 +39,16 @@ public class PsychologistController {
     private PsychologistService psychologistService;
 
     @Autowired
+    private ScheduleService scheduleService;
+
+    @Autowired
+    private PsychologistScheduleRepository psychologistScheduleRepository;
+
+    @Autowired
     private PsychologistMapper mapper;
+
+    @Autowired
+    private ScheduleMapper scheduleMapper;
 
     @Operation(summary = "Get Psychologists", description = "Get All Psychologists")
     @ApiResponses(value = {
@@ -44,6 +64,13 @@ public class PsychologistController {
     public PsychologistResource getById(@PathVariable Long psychologistId)
     {
         return mapper.toResource(psychologistService.getById(psychologistId));
+    }
+
+    @Operation(summary = "Get schedule by Id", description = "Get schedule by Id")
+    @GetMapping("schedule/{scheduleId}")
+    public ScheduleResource getScheduleById(@PathVariable Long scheduleId)
+    {
+        return scheduleMapper.toResource(scheduleService.getById(scheduleId));
     }
 
     @Operation(summary = "Get Psychologists by Email", description = "Get Psychologist by Email")
@@ -93,6 +120,39 @@ public class PsychologistController {
     public PsychologistResource updatePsychologist(@PathVariable Long psychologistId, @RequestBody UpdatePsychologistResource request)
     {
         return mapper.toResource(psychologistService.update(psychologistId, mapper.toModel(request)));
+    }
+
+    @Operation(summary = "Create schedule", description = "Create schedule")
+    @PostMapping("{scheduleId}/{psychologistId}")
+    public PsychologistSchedule createSchedule(@PathVariable Long scheduleId, @PathVariable Long psychologistId)
+    {
+        try {
+            Psychologist psychologist = psychologistService.getById(psychologistId);
+            Schedule schedule = scheduleService.getById(scheduleId);
+
+            if (schedule == null || psychologist == null) {
+                throw new ResourceNotFoundException("Schedule or psychologist not found");
+            }
+            PsychologistScheduleFK newFK = new PsychologistScheduleFK(psychologistId, scheduleId);
+            PsychologistSchedule psychologistSchedule = new PsychologistSchedule(newFK, psychologist, schedule);
+            psychologistScheduleRepository.save(psychologistSchedule);
+            return psychologistSchedule;
+        }catch (Exception e) {
+            throw new ResourceNotFoundException("Schedule or psychologist not found");
+        }
+
+        //Psychologist psychologist = psychologistService.getById(psychologistId);
+        //Schedule schedule = scheduleService.getById(scheduleId);
+
+        //if(schedule == null || psychologist == null)
+        //{
+        //    throw new ResourceNotFoundException("Schedule or psychologist not found");
+        //}
+        //PsychologistScheduleFK newFK = new PsychologistScheduleFK(psychologistId,scheduleId);
+        //PsychologistSchedule psychologistSchedule = new PsychologistSchedule(newFK,psychologist,schedule);
+        //psychologistScheduleRepository.save(psychologistSchedule);
+
+        //return psychologistSchedule;
     }
 
     @Operation(summary = "Delete psychologist", description = "Delete Psychologist by Id")
