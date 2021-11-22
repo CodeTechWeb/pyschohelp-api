@@ -1,5 +1,7 @@
 package com.psycho.psychohelp.publication.mapping;
 
+import com.psycho.psychohelp.psychologist.domain.model.entity.Psychologist;
+import com.psycho.psychohelp.psychologist.resource.PsychologistResource;
 import com.psycho.psychohelp.publication.domain.model.entity.Publication;
 import com.psycho.psychohelp.publication.resource.CreatePublicationResource;
 import com.psycho.psychohelp.publication.resource.PublicationResource;
@@ -28,6 +30,10 @@ public class PublicationMapper implements Serializable {
                 mapper.mapList(modelList, PublicationResource.class),
                 pageable,
                 modelList.size());
+    }
+    public List<PublicationResource> toResource(List<Publication> model)
+    {
+        return mapper.mapList(model, PublicationResource.class);
     }
 
     public Publication toModel(CreatePublicationResource resource){
