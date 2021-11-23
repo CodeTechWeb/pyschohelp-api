@@ -1,0 +1,9 @@
+applications:
+  - name: PSYCHOHELP-OPEN
+    path: target/psychohelp-api-0.0.1-SNAPSHOT.jar
+    memory: 1GB
+    host: PSYCHOHELP-OPEN
+    instances: 1
+    buildpacks:
+      - java_buildpack
+    stack: cflinuxfs3

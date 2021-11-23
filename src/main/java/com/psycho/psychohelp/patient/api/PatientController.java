@@ -17,6 +17,7 @@ import java.util.List;
 @Tag(name = "Patient")
 @RestController
 @RequestMapping("/api/v1/patients")
+@CrossOrigin
 public class PatientController {
 
     @Autowired

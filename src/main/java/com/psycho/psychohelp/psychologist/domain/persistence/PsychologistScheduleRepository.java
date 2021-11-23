@@ -4,4 +4,5 @@ import com.psycho.psychohelp.psychologist.domain.model.entity.PsychologistSchedu
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface PsychologistScheduleRepository extends JpaRepository<PsychologistSchedule, Long> {
+
 }

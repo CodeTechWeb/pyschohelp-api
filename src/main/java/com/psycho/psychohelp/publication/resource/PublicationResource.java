@@ -1,5 +1,6 @@
 package com.psycho.psychohelp.publication.resource;
 
+import com.psycho.psychohelp.psychologist.resource.PsychologistResource;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -12,4 +13,5 @@ public class PublicationResource {
     private String description;
     private String photoUrl;
     private String content;
+    private PsychologistResource psychologist;
 }

@@ -23,6 +23,7 @@ import java.util.List;
 @Tag(name = "Appointment")
 @RestController
 @RequestMapping("/api/v1/appointment")
+@CrossOrigin
 public class AppointmentController {
 
     @Autowired

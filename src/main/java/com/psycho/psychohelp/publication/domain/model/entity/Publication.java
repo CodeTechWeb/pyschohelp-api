@@ -26,7 +26,6 @@ public class Publication extends AuditModel {
     @NotNull
     @NotBlank
     @Size(max = 150)
-    @Column(unique = true)
     private String title;
 
     @NotNull

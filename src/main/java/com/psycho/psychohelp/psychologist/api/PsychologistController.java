@@ -6,6 +6,7 @@ import com.psycho.psychohelp.psychologist.domain.model.entity.PsychologistSchedu
 import com.psycho.psychohelp.psychologist.domain.model.entity.PsychologistScheduleFK;
 import com.psycho.psychohelp.psychologist.domain.model.entity.Schedule;
 import com.psycho.psychohelp.psychologist.domain.persistence.PsychologistScheduleRepository;
+import com.psycho.psychohelp.psychologist.domain.persistence.ScheduleRepository;
 import com.psycho.psychohelp.psychologist.domain.service.PsychologistService;
 import com.psycho.psychohelp.psychologist.domain.service.ScheduleService;
 import com.psycho.psychohelp.psychologist.mapping.PsychologistMapper;
@@ -33,6 +34,7 @@ import java.util.List;
 @Tag(name = "Psychologist")
 @RestController
 @RequestMapping("/api/v1/psychologists")
+@CrossOrigin
 public class PsychologistController {
 
     @Autowired
@@ -43,6 +45,9 @@ public class PsychologistController {
 
     @Autowired
     private PsychologistScheduleRepository psychologistScheduleRepository;
+
+    @Autowired
+    private ScheduleRepository scheduleRepository;
 
     @Autowired
     private PsychologistMapper mapper;
@@ -64,6 +69,13 @@ public class PsychologistController {
     public PsychologistResource getById(@PathVariable Long psychologistId)
     {
         return mapper.toResource(psychologistService.getById(psychologistId));
+    }
+
+    @Operation(summary = "Get Psychologists by Id", description = "Get Psychologist by Id")
+    @GetMapping("{psychologistId}/schedules")
+    public List<ScheduleResource> getSchedulesByPsychologistId(@PathVariable Long psychologistId)
+    {
+        return scheduleMapper.toResource(scheduleRepository.findByPsychologistId(psychologistId));
     }
 
     @Operation(summary = "Get schedule by Id", description = "Get schedule by Id")
