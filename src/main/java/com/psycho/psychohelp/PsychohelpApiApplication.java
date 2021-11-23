@@ -22,7 +22,7 @@ public class PsychohelpApiApplication {
         return new WebMvcConfigurer() {
             @Override
             public void addCorsMappings(CorsRegistry registry) {
-                registry.addMapping("/api/v1/**").allowedOrigins("http://localhost:4200");
+                registry.addMapping("/api/v1/**").allowedOrigins("https://psychohelp-91442.web.app");
             }
         };
     }
