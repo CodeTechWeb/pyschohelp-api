@@ -37,15 +37,4 @@ public class CreateAppointmentResource {
     @NotBlank
     @Size(max = 20)
     private String ScheduleDate;
-
-
-    @NotNull
-    private Date ScheduleDate;
-
-    @NotNull
-    private Date CreatedAt;
-
-    private Long patient_id;
-
-    private Long psychologist_id;
 }

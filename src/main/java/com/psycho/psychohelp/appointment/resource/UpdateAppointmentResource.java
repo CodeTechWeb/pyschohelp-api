@@ -20,7 +20,4 @@ public class UpdateAppointmentResource {
     private String ScheduleDate;
 //    private Long psychologist_id;
 //    private Long patient_id;
-
-    @NotNull
-    private Date ScheduleDate;
 }
