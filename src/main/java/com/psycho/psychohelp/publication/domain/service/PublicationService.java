@@ -10,9 +10,10 @@ import java.util.Optional;
 
 public interface PublicationService {
     List<Publication>getAll();
-    Page<Publication> getAll(Pageable pageable);
+    //Page<Publication> getAll(Pageable pageable);
     Publication getById(Long publicationId);
-    Publication create(Publication publication);
+    Publication create(Publication publication, Long psychologistId);
     Publication update(Long publicationId, Publication request);
     ResponseEntity<?> delete(Long publicationId);
+    List<Publication> getByPsychologistId(Long psychologistId);
 }

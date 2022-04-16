@@ -1,11 +1,8 @@
 package com.psycho.psychohelp.patient.service;
 
-import com.psycho.psychohelp.patient.domain.model.entity.LogBook;
 import com.psycho.psychohelp.patient.domain.model.entity.Patient;
-import com.psycho.psychohelp.patient.domain.persistence.LogBookRepository;
 import com.psycho.psychohelp.patient.domain.persistence.PatientRepository;
 import com.psycho.psychohelp.patient.domain.service.PatientService;
-import com.psycho.psychohelp.patient.resource.CreateLogBookResource;
 import com.psycho.psychohelp.shared.exception.ResourceNotFoundException;
 import com.psycho.psychohelp.shared.exception.ResourceValidationException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,9 +25,6 @@ public class PatientServiceImpl implements PatientService {
     private PatientRepository patientRepository;
 
     @Autowired
-    private LogBookRepository logBookRepository;
-
-    @Autowired
     private Validator validator;
 
     @Override
@@ -50,15 +44,12 @@ public class PatientServiceImpl implements PatientService {
     }
 
     @Override
-    public Patient create(Patient request, Long logBookId) {
+    public Patient create(Patient request) {
         Set<ConstraintViolation<Patient>> violations = validator.validate(request);
 
         if(!violations.isEmpty())
             throw new ResourceValidationException(ENTITY, violations);
-        return logBookRepository.findById(logBookId).map(logBook -> {
-            request.setLogBook(logBook);
-            return patientRepository.save(request);
-        }).orElseThrow(() -> new ResourceNotFoundException("LOGBOOK", logBookId));
+        return patientRepository.save(request);
     }
 
     @Override
@@ -76,13 +67,8 @@ public class PatientServiceImpl implements PatientService {
                                 .withDate(request.getDate())
                                 .withPhone(request.getPhone())
                                 .withGender(request.getGender())
-                                .withImage(request.getImage())))
+                                .withImg(request.getImg())))
                 .orElseThrow(() -> new ResourceNotFoundException(ENTITY, patientId));
-    }
-
-    @Override
-    public Patient getByName(String firstName, String lastName) {
-        return patientRepository.findByFirstNameAndLastName(firstName, lastName);
     }
 
     @Override

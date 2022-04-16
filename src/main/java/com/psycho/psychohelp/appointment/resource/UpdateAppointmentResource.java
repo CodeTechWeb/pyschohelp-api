@@ -12,12 +12,14 @@ import java.util.Date;
 @Setter
 public class UpdateAppointmentResource {
 
-    private Long id;
-
-    @NotNull
-    @NotBlank
-    @Size(max = 100)
-    private String PsychoNotes;
+    private String meetUrl;
+    private String Motive;
+    private String PersonalHistory;
+    private String TestRealized;
+    private String Treatment;
+    private String ScheduleDate;
+//    private Long psychologist_id;
+//    private Long patient_id;
 
     @NotNull
     private Date ScheduleDate;

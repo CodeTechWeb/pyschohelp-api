@@ -13,11 +13,31 @@ import java.util.Date;
 @Getter
 @Setter
 public class CreateAppointmentResource {
-
     @NotNull
     @NotBlank
-    @Size(max = 100)
-    private String PsychoNotes;
+    @Size(max = 200)
+    private String meetUrl;
+    @NotNull
+    @NotBlank
+    @Size(max = 200)
+    private String Motive;
+    @NotNull
+    @NotBlank
+    @Size(max = 200)
+    private String PersonalHistory;
+    @NotNull
+    @NotBlank
+    @Size(max = 200)
+    private String TestRealized;
+    @NotNull
+    @NotBlank
+    @Size(max = 200)
+    private String Treatment;
+    @NotNull
+    @NotBlank
+    @Size(max = 20)
+    private String ScheduleDate;
+
 
     @NotNull
     private Date ScheduleDate;

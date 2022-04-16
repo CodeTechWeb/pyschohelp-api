@@ -21,6 +21,11 @@ public class UpdatePublicationResource {
 
     @NotNull
     @NotBlank
+    @Size(max = 50)
+    private String tags;
+
+    @NotNull
+    @NotBlank
     @Size(max = 250)
     private String description;
 

@@ -1,5 +1,7 @@
 package com.psycho.psychohelp.publication.service;
 
+import com.psycho.psychohelp.psychologist.domain.model.entity.Psychologist;
+import com.psycho.psychohelp.psychologist.domain.persistence.PsychologistRepository;
 import com.psycho.psychohelp.publication.domain.model.entity.Publication;
 import com.psycho.psychohelp.publication.domain.persistence.PublicationRepository;
 import com.psycho.psychohelp.publication.domain.service.PublicationService;
@@ -21,15 +23,18 @@ public class PublicationServiceImpl implements PublicationService {
     @Autowired
     private PublicationRepository publicationRepository;
 
+    @Autowired
+    private PsychologistRepository psychologistRepository;
+
     @Override
     public List<Publication> getAll() {
         return publicationRepository.findAll();
     }
 
-    @Override
-    public Page<Publication> getAll(Pageable pageable) {
-        return publicationRepository.findAll(pageable);
-    }
+    //@Override
+    //public Page<Publication> getAll(Pageable pageable) {
+    //    return publicationRepository.findAll(pageable);
+    //}
 
     @Override
     public Publication getById(Long publicationId) {
@@ -38,17 +43,25 @@ public class PublicationServiceImpl implements PublicationService {
     }
 
     @Override
-    public Publication create(Publication publication) {
+    public List<Publication> getByPsychologistId(Long psychologistId) {
+        return publicationRepository.findByPsychologistId(psychologistId);
+    }
+
+    @Override
+    public Publication create(Publication publication, Long psychologistId) {
+        Psychologist psychologist = psychologistRepository.findById(psychologistId)
+                .orElseThrow(() -> new ResourceNotFoundException("User not found with Id " + psychologistId));
+        publication.setPsychologist(psychologist);
         return publicationRepository.save(publication);
     }
 
     @Override
     public Publication update(Long publicationId, Publication request) {
         return publicationRepository.findById(publicationId).map(publication ->
-             publicationRepository.save(publication
-                    .withTitle(request.getTitle())
-                    .withDescription(request.getDescription())
-                    .withContent(request.getContent())))
+                        publicationRepository.save(publication
+                                .withTitle(request.getTitle())
+                                .withDescription(request.getDescription())
+                                .withContent(request.getContent())))
                 .orElseThrow(()-> new ResourceNotFoundException(ENTITY, publicationId));
     }
 

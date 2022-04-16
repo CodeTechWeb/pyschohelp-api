@@ -49,7 +49,7 @@ public class Patient extends AuditModel {
     private String phone;
 
     @NotNull
-    private Date date;
+    private String date;
 
     @NotNull
     @NotBlank
@@ -58,11 +58,8 @@ public class Patient extends AuditModel {
 
     @NotNull
     @NotBlank
-    private String image;
+    @Size(max = 200)
+    private String img;
 
-    @OneToOne(fetch = FetchType.LAZY, optional = false, cascade = CascadeType.ALL)
-    @JoinColumn(name = "logBook_id", nullable = false)
-    @JsonIgnore
-    private LogBook logBook;
 
 }
