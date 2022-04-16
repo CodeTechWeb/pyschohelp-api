@@ -52,10 +52,12 @@ public class Publication extends AuditModel {
     private Psychologist psychologist;
 
 
-
-
-
-
-
-
+    public Publication(Long id, String title, String description, String tags, String photoUrl, String content) {
+        this.id = id;
+        this.title = title;
+        this.description = description;
+        this.tags = tags;
+        this.photoUrl = photoUrl;
+        this.content = content;
+    }
 }

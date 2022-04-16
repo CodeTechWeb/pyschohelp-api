@@ -96,4 +96,23 @@ public class Psychologist extends AuditModel {
 
     @OneToMany(mappedBy = "psychologist")
     private List<PsychologistSchedule> psychologistSchedules;
+
+    public Psychologist(Long id, String name, String dni, Date birthdayDate, String email, String password, String phone, String specialization, String formation, String about, String genre, String sessionType, String image, String cmp, Boolean active, Boolean fresh) {
+        this.id = id;
+        this.name = name;
+        this.dni = dni;
+        this.birthdayDate = birthdayDate;
+        this.email = email;
+        this.password = password;
+        this.phone = phone;
+        this.specialization = specialization;
+        this.formation = formation;
+        this.about = about;
+        this.genre = genre;
+        this.sessionType = sessionType;
+        this.image = image;
+        this.cmp = cmp;
+        this.active = active;
+        this.fresh = fresh;
+    }
 }

@@ -42,9 +42,9 @@ public class PublicationController {
     }
 
     @Operation(summary = "Create Publication", description = "Create Publication")
-    @PostMapping("publication/{publicationId}")
-    public PublicationResource createPublication(@PathVariable Long publicationId,  @Valid @RequestBody CreatePublicationResource request){
-        return mapper.toResource(publicationService.create(mapper.toModel(request),publicationId));
+    @PostMapping("psychologists/{psychologistId}")
+    public PublicationResource createPublication(@PathVariable Long psychologistId,  @Valid @RequestBody CreatePublicationResource request){
+        return mapper.toResource(publicationService.create(mapper.toModel(request),psychologistId));
     }
 
     @Operation(summary = "Get Publication by Id", description = "Get Publication by Id")
