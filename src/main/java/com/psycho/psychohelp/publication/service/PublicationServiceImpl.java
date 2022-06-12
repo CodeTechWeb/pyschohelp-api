@@ -61,7 +61,9 @@ public class PublicationServiceImpl implements PublicationService {
                         publicationRepository.save(publication
                                 .withTitle(request.getTitle())
                                 .withDescription(request.getDescription())
-                                .withContent(request.getContent())))
+                                .withTags(request.getTags())
+                                .withContent(request.getContent())
+                                .withPhotoUrl(request.getPhotoUrl())))
                 .orElseThrow(()-> new ResourceNotFoundException(ENTITY, publicationId));
     }
 

@@ -12,7 +12,9 @@ import javax.validation.constraints.Size;
 @Setter
 public class UpdatePublicationResource {
 
-    private Long id;
+    @NotNull
+    @NotBlank
+    private String photoUrl;
 
     @NotNull
     @NotBlank
