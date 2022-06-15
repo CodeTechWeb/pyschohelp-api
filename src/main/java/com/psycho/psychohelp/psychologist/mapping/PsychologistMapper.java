@@ -19,31 +19,26 @@ public class PsychologistMapper {
 
     // Object Mapping
 
-    public PsychologistResource toResource(Psychologist model)
-    {
-        return mapper.map(model, PsychologistResource.class);
-    }
-
-    public List<PsychologistResource> toResource(List<Psychologist> model)
-    {
-        return mapper.mapList(model, PsychologistResource.class);
-    }
-
-    public Page<PsychologistResource> modelListToPage(List<Psychologist> modelList, Pageable pageable)
-    {
+    public Page<PsychologistResource> modelListToPage(List<Psychologist> modelList, Pageable pageable) {
         return new PageImpl<>(
                 mapper.mapList(modelList, PsychologistResource.class),
                 pageable,
                 modelList.size());
     }
 
-    public Psychologist toModel(CreatePsychologistResource resource)
-    {
+    public PsychologistResource toResource(Psychologist model) {
+        return mapper.map(model, PsychologistResource.class);
+    }
+
+    public List<PsychologistResource> toResource(List<Psychologist> model) {
+        return mapper.mapList(model, PsychologistResource.class);
+    }
+
+    public Psychologist toModel(CreatePsychologistResource resource) {
         return mapper.map(resource, Psychologist.class);
     }
 
-    public Psychologist toModel(UpdatePsychologistResource resource)
-    {
+    public Psychologist toModel(UpdatePsychologistResource resource) {
         return mapper.map(resource, Psychologist.class);
     }
 }

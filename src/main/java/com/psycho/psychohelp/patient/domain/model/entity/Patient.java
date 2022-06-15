@@ -1,13 +1,10 @@
 package com.psycho.psychohelp.patient.domain.model.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.psycho.psychohelp.shared.domain.model.AuditModel;
 import lombok.*;
-import org.hibernate.validator.constraints.Range;
 
 import javax.persistence.*;
 import javax.validation.constraints.*;
-import java.util.Date;
 
 @Getter
 @Setter
@@ -49,6 +46,7 @@ public class Patient extends AuditModel {
     private String phone;
 
     @NotNull
+    @NotBlank
     private String date;
 
     @NotNull
@@ -58,7 +56,7 @@ public class Patient extends AuditModel {
 
     @NotNull
     @NotBlank
-    @Size(max = 200)
+    @Size(max = 250)
     private String img;
 
 

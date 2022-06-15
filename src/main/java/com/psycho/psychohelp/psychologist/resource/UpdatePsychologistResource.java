@@ -25,6 +25,7 @@ public class UpdatePsychologistResource {
     private String dni;
 
     @NotNull
+    @NotBlank
     private Date birthdayDate;
 
     @NotNull

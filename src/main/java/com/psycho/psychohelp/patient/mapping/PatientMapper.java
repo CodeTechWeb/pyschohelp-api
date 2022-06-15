@@ -26,13 +26,23 @@ public class PatientMapper {
                 modelList.size());
     }
 
-    public PatientResource toResource(Patient model) { return mapper.map(model, PatientResource.class); }
+    public PatientResource toResource(Patient model) {
+        return mapper.map(model, PatientResource.class);
+    }
 
-    public List<PatientResource> toResource(List<Patient> model) { return mapper.mapList(model, PatientResource.class); }
+    public List<PatientResource> toResource(List<Patient> model) {
+        return mapper.mapList(model, PatientResource.class);
+    }
 
-    public Patient toModel(CreatePatientResource resource) { return mapper.map(resource, Patient.class); }
+    public Patient toModel(CreatePatientResource resource) {
+        return mapper.map(resource, Patient.class);
+    }
 
-    public Patient toModel(PatientResource resource) { return mapper.map(resource, Patient.class); }
+    public Patient toModel(PatientResource resource) {
+        return mapper.map(resource, Patient.class);
+    }
 
-    public Patient toModel(UpdatePatientResource resource) { return mapper.map(resource, Patient.class); }
+    public Patient toModel(UpdatePatientResource resource) {
+        return mapper.map(resource, Patient.class);
+    }
 }

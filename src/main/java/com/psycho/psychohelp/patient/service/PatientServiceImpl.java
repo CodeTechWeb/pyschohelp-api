@@ -55,7 +55,6 @@ public class PatientServiceImpl implements PatientService {
     @Override
     public Patient update(Long patientId, Patient request) {
         Set<ConstraintViolation<Patient>> violations = validator.validate(request);
-
         if(!violations.isEmpty())
             throw new ResourceValidationException(ENTITY, violations);
 
@@ -64,6 +63,7 @@ public class PatientServiceImpl implements PatientService {
                         patient.withFirstName(request.getFirstName())
                                 .withLastName(request.getLastName())
                                 .withEmail(request.getEmail())
+                                .withPassword(request.getPassword())
                                 .withDate(request.getDate())
                                 .withPhone(request.getPhone())
                                 .withGender(request.getGender())

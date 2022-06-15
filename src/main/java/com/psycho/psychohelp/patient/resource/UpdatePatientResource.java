@@ -15,6 +15,8 @@ import java.util.Date;
 @Setter
 public class UpdatePatientResource {
 
+    private Long id;
+
     @NotNull
     @NotBlank
     @Size(max = 20)
@@ -51,6 +53,6 @@ public class UpdatePatientResource {
 
     @NotNull
     @NotBlank
-    @Size(max = 200)
+    @Size(max = 250)
     private String img;
 }

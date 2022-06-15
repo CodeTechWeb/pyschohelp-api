@@ -38,7 +38,7 @@ public class CreatePatientResource {
     private String phone;
 
     @NotNull
-    @Size(max = 200)
+    @NotBlank
     private String date;
 
     @NotNull
@@ -48,5 +48,6 @@ public class CreatePatientResource {
 
     @NotNull
     @NotBlank
+    @Size(max = 250)
     private String img;
 }
